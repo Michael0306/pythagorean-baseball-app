@@ -1,0 +1,680 @@
+{
+  "lastUpdated": "2026-08-11T13:43:23.683Z",
+  "leagues": {
+    "KBO": {
+      "metadata": {
+        "league": "KBO",
+        "sourceUrl": "https://sports.news.naver.com/kbaseball/record/index",
+        "scrapedAt": "2026-08-11T13:43:23.061Z",
+        "status": "fallback_cache",
+        "parser": "KBO Baseline Cache (Naver Sports fallback)",
+        "selectorInfo": "Pre-loaded verified season standings (10 Teams)",
+        "errorMessage": "Direct JSON parsing did not return regularTeamRecordList"
+      },
+      "subLeagues": [
+        {
+          "name": "KBO League",
+          "teams": [
+            {
+              "id": "kbo_kia",
+              "team": "KIA",
+              "teamCode": "KIA",
+              "rank": 1,
+              "wins": 87,
+              "losses": 55,
+              "draws": 2,
+              "winRate": 0.613,
+              "runsScored": 858,
+              "runsAllowed": 717
+            },
+            {
+              "id": "kbo_sam",
+              "team": "Samsung",
+              "teamCode": "SAM",
+              "rank": 2,
+              "wins": 78,
+              "losses": 64,
+              "draws": 2,
+              "winRate": 0.549,
+              "runsScored": 770,
+              "runsAllowed": 720
+            },
+            {
+              "id": "kbo_lg",
+              "team": "LG",
+              "teamCode": "LG",
+              "rank": 3,
+              "wins": 76,
+              "losses": 66,
+              "draws": 2,
+              "winRate": 0.535,
+              "runsScored": 808,
+              "runsAllowed": 752
+            },
+            {
+              "id": "kbo_doo",
+              "team": "Doosan",
+              "teamCode": "DOO",
+              "rank": 4,
+              "wins": 74,
+              "losses": 68,
+              "draws": 2,
+              "winRate": 0.521,
+              "runsScored": 757,
+              "runsAllowed": 748
+            },
+            {
+              "id": "kbo_kt",
+              "team": "KT",
+              "teamCode": "KT",
+              "rank": 5,
+              "wins": 71,
+              "losses": 70,
+              "draws": 3,
+              "winRate": 0.504,
+              "runsScored": 766,
+              "runsAllowed": 772
+            },
+            {
+              "id": "kbo_ssg",
+              "team": "SSG",
+              "teamCode": "SSG",
+              "rank": 6,
+              "wins": 72,
+              "losses": 70,
+              "draws": 2,
+              "winRate": 0.507,
+              "runsScored": 740,
+              "runsAllowed": 786
+            },
+            {
+              "id": "kbo_lot",
+              "team": "Lotte",
+              "teamCode": "LOT",
+              "rank": 7,
+              "wins": 66,
+              "losses": 74,
+              "draws": 4,
+              "winRate": 0.471,
+              "runsScored": 750,
+              "runsAllowed": 781
+            },
+            {
+              "id": "mlb_han",
+              "team": "Hanwha",
+              "teamCode": "HAN",
+              "rank": 8,
+              "wins": 66,
+              "losses": 76,
+              "draws": 2,
+              "winRate": 0.465,
+              "runsScored": 730,
+              "runsAllowed": 782
+            },
+            {
+              "id": "kbo_nc",
+              "team": "NC",
+              "teamCode": "NC",
+              "rank": 9,
+              "wins": 61,
+              "losses": 81,
+              "draws": 2,
+              "winRate": 0.43,
+              "runsScored": 739,
+              "runsAllowed": 825
+            },
+            {
+              "id": "kbo_kiw",
+              "team": "Kiwoom",
+              "teamCode": "KIW",
+              "rank": 10,
+              "wins": 58,
+              "losses": 86,
+              "draws": 0,
+              "winRate": 0.403,
+              "runsScored": 673,
+              "runsAllowed": 825
+            }
+          ]
+        }
+      ]
+    },
+    "MLB": {
+      "metadata": {
+        "league": "MLB",
+        "sourceUrl": "https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&sportId=1&standingsType=regularSeason",
+        "scrapedAt": "2026-08-11T13:43:23.105Z",
+        "status": "success",
+        "parser": "MLB Official REST API (statsapi.mlb.com)",
+        "selectorInfo": "JSON Path: records[].teamRecords[] -> team.name, winningPercentage, runsScored, runsAllowed, wins, losses"
+      },
+      "subLeagues": [
+        {
+          "name": "American League",
+          "teams": [
+            {
+              "id": "mlb_139",
+              "team": "Rays",
+              "fullName": "Rays",
+              "teamCode": "RAY",
+              "rank": 1,
+              "wins": 72,
+              "losses": 46,
+              "winRate": 0.61,
+              "runsScored": 529,
+              "runsAllowed": 479
+            },
+            {
+              "id": "mlb_147",
+              "team": "Yankees",
+              "fullName": "Yankees",
+              "teamCode": "YAN",
+              "rank": 2,
+              "wins": 66,
+              "losses": 52,
+              "winRate": 0.559,
+              "runsScored": 531,
+              "runsAllowed": 449
+            },
+            {
+              "id": "mlb_111",
+              "team": "Red Sox",
+              "fullName": "Red Sox",
+              "teamCode": "RED",
+              "rank": 3,
+              "wins": 64,
+              "losses": 54,
+              "winRate": 0.542,
+              "runsScored": 524,
+              "runsAllowed": 441
+            },
+            {
+              "id": "mlb_145",
+              "team": "White Sox",
+              "fullName": "White Sox",
+              "teamCode": "WHI",
+              "rank": 4,
+              "wins": 61,
+              "losses": 56,
+              "winRate": 0.521,
+              "runsScored": 557,
+              "runsAllowed": 520
+            },
+            {
+              "id": "mlb_117",
+              "team": "Astros",
+              "fullName": "Astros",
+              "teamCode": "AST",
+              "rank": 5,
+              "wins": 61,
+              "losses": 59,
+              "winRate": 0.508,
+              "runsScored": 556,
+              "runsAllowed": 581
+            },
+            {
+              "id": "mlb_140",
+              "team": "Rangers",
+              "fullName": "Rangers",
+              "teamCode": "RAN",
+              "rank": 6,
+              "wins": 60,
+              "losses": 59,
+              "winRate": 0.504,
+              "runsScored": 493,
+              "runsAllowed": 523
+            },
+            {
+              "id": "mlb_116",
+              "team": "Tigers",
+              "fullName": "Tigers",
+              "teamCode": "TIG",
+              "rank": 7,
+              "wins": 58,
+              "losses": 60,
+              "winRate": 0.492,
+              "runsScored": 539,
+              "runsAllowed": 452
+            },
+            {
+              "id": "mlb_142",
+              "team": "Twins",
+              "fullName": "Twins",
+              "teamCode": "TWI",
+              "rank": 8,
+              "wins": 59,
+              "losses": 61,
+              "winRate": 0.492,
+              "runsScored": 562,
+              "runsAllowed": 593
+            },
+            {
+              "id": "mlb_114",
+              "team": "Guardians",
+              "fullName": "Guardians",
+              "teamCode": "GUA",
+              "rank": 9,
+              "wins": 58,
+              "losses": 61,
+              "winRate": 0.487,
+              "runsScored": 473,
+              "runsAllowed": 500
+            },
+            {
+              "id": "mlb_110",
+              "team": "Orioles",
+              "fullName": "Orioles",
+              "teamCode": "ORI",
+              "rank": 10,
+              "wins": 57,
+              "losses": 62,
+              "winRate": 0.479,
+              "runsScored": 533,
+              "runsAllowed": 570
+            },
+            {
+              "id": "mlb_141",
+              "team": "Blue Jays",
+              "fullName": "Blue Jays",
+              "teamCode": "BLU",
+              "rank": 11,
+              "wins": 57,
+              "losses": 63,
+              "winRate": 0.475,
+              "runsScored": 471,
+              "runsAllowed": 529
+            },
+            {
+              "id": "mlb_136",
+              "team": "Mariners",
+              "fullName": "Mariners",
+              "teamCode": "MAR",
+              "rank": 12,
+              "wins": 56,
+              "losses": 63,
+              "winRate": 0.471,
+              "runsScored": 462,
+              "runsAllowed": 481
+            },
+            {
+              "id": "mlb_118",
+              "team": "Royals",
+              "fullName": "Royals",
+              "teamCode": "ROY",
+              "rank": 13,
+              "wins": 49,
+              "losses": 71,
+              "winRate": 0.408,
+              "runsScored": 497,
+              "runsAllowed": 608
+            },
+            {
+              "id": "mlb_133",
+              "team": "Athletics",
+              "fullName": "Athletics",
+              "teamCode": "ATH",
+              "rank": 14,
+              "wins": 47,
+              "losses": 72,
+              "winRate": 0.395,
+              "runsScored": 516,
+              "runsAllowed": 684
+            },
+            {
+              "id": "mlb_108",
+              "team": "Angels",
+              "fullName": "Angels",
+              "teamCode": "ANG",
+              "rank": 15,
+              "wins": 45,
+              "losses": 74,
+              "winRate": 0.378,
+              "runsScored": 485,
+              "runsAllowed": 579
+            }
+          ]
+        },
+        {
+          "name": "National League",
+          "teams": [
+            {
+              "id": "mlb_158",
+              "team": "Brewers",
+              "fullName": "Brewers",
+              "teamCode": "BRE",
+              "rank": 1,
+              "wins": 74,
+              "losses": 45,
+              "winRate": 0.622,
+              "runsScored": 587,
+              "runsAllowed": 447
+            },
+            {
+              "id": "mlb_119",
+              "team": "Dodgers",
+              "fullName": "Dodgers",
+              "teamCode": "DOD",
+              "rank": 2,
+              "wins": 71,
+              "losses": 48,
+              "winRate": 0.597,
+              "runsScored": 597,
+              "runsAllowed": 458
+            },
+            {
+              "id": "mlb_144",
+              "team": "Braves",
+              "fullName": "Braves",
+              "teamCode": "BRA",
+              "rank": 3,
+              "wins": 71,
+              "losses": 48,
+              "winRate": 0.597,
+              "runsScored": 581,
+              "runsAllowed": 464
+            },
+            {
+              "id": "mlb_112",
+              "team": "Cubs",
+              "fullName": "Cubs",
+              "teamCode": "CUB",
+              "rank": 4,
+              "wins": 69,
+              "losses": 50,
+              "winRate": 0.58,
+              "runsScored": 614,
+              "runsAllowed": 507
+            },
+            {
+              "id": "mlb_109",
+              "team": "D-backs",
+              "fullName": "D-backs",
+              "teamCode": "D-B",
+              "rank": 5,
+              "wins": 64,
+              "losses": 56,
+              "winRate": 0.533,
+              "runsScored": 546,
+              "runsAllowed": 532
+            },
+            {
+              "id": "mlb_143",
+              "team": "Phillies",
+              "fullName": "Phillies",
+              "teamCode": "PHI",
+              "rank": 6,
+              "wins": 64,
+              "losses": 56,
+              "winRate": 0.533,
+              "runsScored": 534,
+              "runsAllowed": 533
+            },
+            {
+              "id": "mlb_135",
+              "team": "Padres",
+              "fullName": "Padres",
+              "teamCode": "PAD",
+              "rank": 7,
+              "wins": 63,
+              "losses": 57,
+              "winRate": 0.525,
+              "runsScored": 507,
+              "runsAllowed": 516
+            },
+            {
+              "id": "mlb_146",
+              "team": "Marlins",
+              "fullName": "Marlins",
+              "teamCode": "MAR",
+              "rank": 8,
+              "wins": 60,
+              "losses": 59,
+              "winRate": 0.504,
+              "runsScored": 524,
+              "runsAllowed": 509
+            },
+            {
+              "id": "mlb_138",
+              "team": "Cardinals",
+              "fullName": "Cardinals",
+              "teamCode": "CAR",
+              "rank": 9,
+              "wins": 59,
+              "losses": 60,
+              "winRate": 0.496,
+              "runsScored": 520,
+              "runsAllowed": 529
+            },
+            {
+              "id": "mlb_120",
+              "team": "Nationals",
+              "fullName": "Nationals",
+              "teamCode": "NAT",
+              "rank": 10,
+              "wins": 59,
+              "losses": 61,
+              "winRate": 0.492,
+              "runsScored": 643,
+              "runsAllowed": 619
+            },
+            {
+              "id": "mlb_134",
+              "team": "Pirates",
+              "fullName": "Pirates",
+              "teamCode": "PIR",
+              "rank": 11,
+              "wins": 58,
+              "losses": 62,
+              "winRate": 0.483,
+              "runsScored": 602,
+              "runsAllowed": 581
+            },
+            {
+              "id": "mlb_113",
+              "team": "Reds",
+              "fullName": "Reds",
+              "teamCode": "RED",
+              "rank": 12,
+              "wins": 56,
+              "losses": 61,
+              "winRate": 0.479,
+              "runsScored": 482,
+              "runsAllowed": 556
+            },
+            {
+              "id": "mlb_121",
+              "team": "Mets",
+              "fullName": "Mets",
+              "teamCode": "MET",
+              "rank": 13,
+              "wins": 53,
+              "losses": 67,
+              "winRate": 0.442,
+              "runsScored": 507,
+              "runsAllowed": 547
+            },
+            {
+              "id": "mlb_137",
+              "team": "Giants",
+              "fullName": "Giants",
+              "teamCode": "GIA",
+              "rank": 14,
+              "wins": 49,
+              "losses": 70,
+              "winRate": 0.412,
+              "runsScored": 488,
+              "runsAllowed": 554
+            },
+            {
+              "id": "mlb_115",
+              "team": "Rockies",
+              "fullName": "Rockies",
+              "teamCode": "ROC",
+              "rank": 15,
+              "wins": 46,
+              "losses": 73,
+              "winRate": 0.387,
+              "runsScored": 568,
+              "runsAllowed": 687
+            }
+          ]
+        }
+      ]
+    },
+    "NPB": {
+      "metadata": {
+        "league": "NPB",
+        "sourceUrl": "https://sports.yahoo.co.jp/baseball/npb/standings/",
+        "scrapedAt": "2026-08-11T13:43:23.106Z",
+        "status": "fallback_cache",
+        "parser": "NPB Baseline Cache (NPB Official fallback)",
+        "selectorInfo": "Pre-loaded verified season standings (Central League 6 teams, Pacific League 6 teams)",
+        "errorMessage": "Request failed with status code 404"
+      },
+      "subLeagues": [
+        {
+          "name": "Central League",
+          "teams": [
+            {
+              "id": "npb_gia",
+              "team": "Giants",
+              "teamCode": "GIA",
+              "rank": 1,
+              "wins": 77,
+              "losses": 59,
+              "winRate": 0.566,
+              "runsScored": 462,
+              "runsAllowed": 404
+            },
+            {
+              "id": "npb_tig",
+              "team": "Tigers",
+              "teamCode": "TIG",
+              "rank": 2,
+              "wins": 74,
+              "losses": 63,
+              "winRate": 0.54,
+              "runsScored": 485,
+              "runsAllowed": 422
+            },
+            {
+              "id": "npb_bay",
+              "team": "BayStars",
+              "teamCode": "BAY",
+              "rank": 3,
+              "wins": 71,
+              "losses": 69,
+              "winRate": 0.507,
+              "runsScored": 522,
+              "runsAllowed": 501
+            },
+            {
+              "id": "npb_car",
+              "team": "Carp",
+              "teamCode": "CAR",
+              "rank": 4,
+              "wins": 68,
+              "losses": 70,
+              "winRate": 0.493,
+              "runsScored": 442,
+              "runsAllowed": 468
+            },
+            {
+              "id": "npb_dra",
+              "team": "Dragons",
+              "teamCode": "DRA",
+              "rank": 5,
+              "wins": 60,
+              "losses": 75,
+              "winRate": 0.444,
+              "runsScored": 395,
+              "runsAllowed": 470
+            },
+            {
+              "id": "npb_swa",
+              "team": "Swallows",
+              "teamCode": "SWA",
+              "rank": 6,
+              "wins": 57,
+              "losses": 81,
+              "winRate": 0.413,
+              "runsScored": 478,
+              "runsAllowed": 519
+            }
+          ]
+        },
+        {
+          "name": "Pacific League",
+          "teams": [
+            {
+              "id": "npb_haw",
+              "team": "Hawks",
+              "teamCode": "HAW",
+              "rank": 1,
+              "wins": 91,
+              "losses": 49,
+              "winRate": 0.65,
+              "runsScored": 607,
+              "runsAllowed": 390
+            },
+            {
+              "id": "npb_mar",
+              "team": "Marines",
+              "teamCode": "MAR",
+              "rank": 2,
+              "wins": 71,
+              "losses": 66,
+              "winRate": 0.518,
+              "runsScored": 508,
+              "runsAllowed": 500
+            },
+            {
+              "id": "npb_fig",
+              "team": "Fighters",
+              "teamCode": "FIG",
+              "rank": 3,
+              "wins": 75,
+              "losses": 60,
+              "winRate": 0.556,
+              "runsScored": 532,
+              "runsAllowed": 461
+            },
+            {
+              "id": "npb_buf",
+              "team": "Buffaloes",
+              "teamCode": "BUF",
+              "rank": 4,
+              "wins": 63,
+              "losses": 77,
+              "winRate": 0.45,
+              "runsScored": 446,
+              "runsAllowed": 492
+            },
+            {
+              "id": "npb_eag",
+              "team": "Eagles",
+              "teamCode": "EAG",
+              "rank": 5,
+              "wins": 67,
+              "losses": 72,
+              "winRate": 0.482,
+              "runsScored": 476,
+              "runsAllowed": 525
+            },
+            {
+              "id": "npb_lio",
+              "team": "Lions",
+              "teamCode": "LIO",
+              "rank": 6,
+              "wins": 49,
+              "losses": 91,
+              "winRate": 0.35,
+              "runsScored": 350,
+              "runsAllowed": 505
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
