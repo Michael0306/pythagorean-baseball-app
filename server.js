@@ -120,10 +120,25 @@ if (fs.existsSync(distPath)) {
   });
 }
 
+// Daily Automatic Refresh Interval (6 hours = 21,600,000 ms)
+const AUTO_REFRESH_INTERVAL_MS = 6 * 60 * 60 * 1000;
+
 app.listen(PORT, async () => {
   console.log(`[Server] Pythagorean Baseball Backend running on http://localhost:${PORT}`);
-  // Initial check / refresh if data file does not exist
-  if (!loadStandingsData()) {
-    await refreshAllStandings();
-  }
+  
+  // Initial refresh to get fresh daily standings from Daum Sports KBO
+  console.log('[Server] Performing initial data refresh on server start...');
+  await refreshAllStandings();
+
+  // Schedule background updates every 6 hours
+  setInterval(async () => {
+    console.log('[Server Cron] Running scheduled daily update for baseball standings...');
+    try {
+      await refreshAllStandings();
+      console.log('[Server Cron] Daily update completed successfully.');
+    } catch (err) {
+      console.error('[Server Cron] Daily update failed:', err.message);
+    }
+  }, AUTO_REFRESH_INTERVAL_MS);
 });
+
