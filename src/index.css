@@ -31,7 +31,8 @@ body {
 }
 
 .app-container {
-  max-width: 640px;
+  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   min-height: 100vh;
   background-color: var(--bg-primary);
@@ -45,46 +46,47 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: 16px 24px;
   background-color: #ffffff;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 40;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
 }
 
 .header-title-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .header-icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 6px;
   background-color: #f1f5f9;
   font-size: 14px;
 }
 
 .header-title {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 800;
   color: var(--text-main);
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
 }
 
 .metadata-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   background-color: #f1f5f9;
   border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
   color: #334155;
@@ -98,11 +100,11 @@ body {
 
 /* Hero Section */
 .hero-section {
-  padding: 24px 20px 16px 20px;
+  padding: 28px 24px 18px 24px;
 }
 
 .hero-title {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 800;
   color: #0f172a;
   line-height: 1.2;
@@ -111,7 +113,7 @@ body {
 }
 
 .hero-subtitle {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-muted);
   line-height: 1.45;
 }
@@ -121,22 +123,29 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: #0f172a;
-  margin: 20px 20px 12px 20px;
+  margin: 24px 24px 12px 24px;
   letter-spacing: -0.3px;
 }
 
-/* Table Card Container */
+/* Table Card Container & Responsive Wrapper */
 .table-card {
-  margin: 0 20px 24px 20px;
+  margin: 0 24px 28px 24px;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .standings-table {
   width: 100%;
+  min-width: 760px;
   border-collapse: collapse;
   text-align: left;
   font-size: 14px;
@@ -144,18 +153,19 @@ body {
 
 .standings-table th {
   background-color: #f8fafc;
-  padding: 12px 14px;
+  padding: 14px 16px;
   font-size: 13px;
-  font-weight: 600;
-  color: #64748b;
+  font-weight: 700;
+  color: #475569;
   border-bottom: 1px solid var(--border-color);
   white-space: nowrap;
 }
 
 .standings-table td {
-  padding: 14px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--border-subtle);
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .standings-table tr:last-child td {
@@ -166,13 +176,31 @@ body {
   background-color: #f8fafc;
 }
 
+/* Sticky Column for Team Name on Mobile Scroll */
+.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  background-color: #ffffff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.04);
+}
+
+.standings-table th.sticky-col {
+  background-color: #f8fafc;
+}
+
 /* Team Name Cell */
 .team-cell {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 600;
+  font-weight: 700;
   color: #0f172a;
+}
+
+.team-name-text {
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .team-code-tag {
@@ -190,27 +218,27 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   background-color: #0f172a;
   color: #ffffff;
   font-size: 13px;
-  font-weight: 700;
-  border-radius: 4px;
+  font-weight: 800;
+  border-radius: 6px;
 }
 
 .rank-badge-light {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   background-color: #ffffff;
   border: 1px solid #cbd5e1;
   color: #1e293b;
   font-size: 13px;
-  font-weight: 600;
-  border-radius: 4px;
+  font-weight: 700;
+  border-radius: 6px;
 }
 
 /* Value Columns */
@@ -219,13 +247,19 @@ body {
   color: #1e293b;
 }
 
+.value-num.muted {
+  color: #64748b;
+  font-weight: 500;
+  font-size: 13px;
+}
+
 .diff-tag {
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  padding: 2px 5px;
+  padding: 2px 6px;
   border-radius: 4px;
-  margin-left: 4px;
+  margin-left: 2px;
 }
 
 .diff-positive {
@@ -242,11 +276,25 @@ body {
   color: #94a3b8;
 }
 
+.diff-text-pos {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.diff-text-neg {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.diff-text-zero {
+  color: #94a3b8;
+}
+
 /* Floating Exponent Selector */
 .floating-exponent-container {
   position: fixed;
   bottom: 80px;
-  right: 20px;
+  right: 24px;
   z-index: 50;
 }
 
@@ -256,13 +304,13 @@ body {
   gap: 8px;
   background-color: #000000;
   color: #ffffff;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border-radius: 12px;
   border: none;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
   transition: transform 0.15s ease, background-color 0.15s ease;
 }
 
@@ -273,15 +321,15 @@ body {
 
 .exponent-menu {
   position: absolute;
-  bottom: 50px;
+  bottom: 52px;
   right: 0;
-  width: 190px;
+  width: 200px;
   background: #ffffff;
   border: 1px solid var(--border-color);
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   padding: 6px;
-  max-height: 240px;
+  max-height: 250px;
   overflow-y: auto;
 }
 
@@ -319,7 +367,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 640px;
+  max-width: 1200px;
   height: 64px;
   background-color: #ffffff;
   border-top: 1px solid var(--border-color);
@@ -327,7 +375,7 @@ body {
   align-items: center;
   justify-content: space-around;
   z-index: 50;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
 }
 
 .tab-item {
@@ -343,7 +391,7 @@ body {
   cursor: pointer;
   position: relative;
   color: #64748b;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   transition: color 0.15s ease;
 }
@@ -357,11 +405,11 @@ body {
   content: '';
   position: absolute;
   top: 0;
-  left: 20%;
-  right: 20%;
+  left: 30%;
+  right: 30%;
   height: 3px;
   background-color: #000000;
-  border-radius: 0 0 2px 2px;
+  border-radius: 0 0 3px 3px;
 }
 
 .tab-icon {
@@ -389,7 +437,7 @@ body {
   background: #ffffff;
   border-radius: 16px;
   width: 100%;
-  max-width: 580px;
+  max-width: 680px;
   max-height: 85vh;
   display: flex;
   flex-direction: column;
@@ -456,3 +504,29 @@ body {
   font-size: 13px;
   text-align: center;
 }
+
+/* Responsive Media Queries for Mobile Screens */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 20px 16px 12px 16px;
+  }
+  .hero-title {
+    font-size: 24px;
+  }
+  .subleague-title {
+    margin: 16px 16px 10px 16px;
+    font-size: 18px;
+  }
+  .table-card {
+    margin: 0 16px 20px 16px;
+    border-radius: 10px;
+  }
+  .standings-table th, .standings-table td {
+    padding: 12px 10px;
+  }
+  .floating-exponent-container {
+    bottom: 74px;
+    right: 14px;
+  }
+}
+
