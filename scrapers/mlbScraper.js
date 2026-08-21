@@ -1,32 +1,48 @@
 import axios from 'axios';
 
 export async function fetchMLBStandings() {
-  const sourceUrl = 'https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&sportId=1&standingsType=regularSeason';
+  const sourceUrl = 'https://www.espn.com/mlb/standings/_/group/league';
+  const apiUrl = 'https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings';
   const scrapedAt = new Date().toISOString();
 
   try {
-    const response = await axios.get(sourceUrl, { timeout: 10000 });
-    const records = response.data.records || [];
+    const response = await axios.get(apiUrl, { timeout: 10000 });
+    const leagues = response.data.children || [];
 
     const alTeams = [];
     const nlTeams = [];
 
-    records.forEach((record) => {
-      const isAL = record.league.id === 103;
-      const teamRecords = record.teamRecords || [];
+    leagues.forEach((league) => {
+      const isAL = league.name && league.name.includes('American');
+      const entries = league.standings?.entries || [];
 
-      teamRecords.forEach((tr) => {
+      entries.forEach((entry) => {
+        const stats = {};
+        (entry.stats || []).forEach((s) => {
+          stats[s.name] = s.value;
+        });
+
+        const shortName = entry.team?.name || entry.team?.displayName || '';
+        const fullName = entry.team?.displayName || shortName;
+        const abbrev = entry.team?.abbreviation || shortName.substring(0, 3).toUpperCase();
+
+        const wins = parseInt(stats.wins || 0, 10);
+        const losses = parseInt(stats.losses || 0, 10);
+        const winRate = parseFloat(stats.winPercent || 0);
+        const runsScored = parseInt(stats.pointsFor || 0, 10);
+        const runsAllowed = parseInt(stats.pointsAgainst || 0, 10);
+
         const teamObj = {
-          id: `mlb_${tr.team.id}`,
-          team: tr.team.name.replace(/^(New York|Los Angeles|San Francisco|San Diego|Tampa Bay|Kansas City|St. Louis) /, ''),
-          fullName: tr.team.name,
-          teamCode: tr.team.abbreviation || tr.team.name.substring(0, 3).toUpperCase(),
-          rank: parseInt(tr.divisionRank || tr.leagueRank || 1, 10),
-          wins: parseInt(tr.wins || 0, 10),
-          losses: parseInt(tr.losses || 0, 10),
-          winRate: parseFloat(tr.winningPercentage || 0),
-          runsScored: parseInt(tr.runsScored || 0, 10),
-          runsAllowed: parseInt(tr.runsAllowed || 0, 10),
+          id: `mlb_${entry.team?.id || shortName.toLowerCase()}`,
+          team: shortName,
+          fullName,
+          teamCode: abbrev,
+          rank: 1, // Will be calculated after sorting
+          wins,
+          losses,
+          winRate,
+          runsScored,
+          runsAllowed,
         };
 
         if (isAL) {
@@ -37,7 +53,6 @@ export async function fetchMLBStandings() {
       });
     });
 
-    // Sort AL and NL by actual win rate descending, then rank 1..N
     const processLeague = (teams) => {
       teams.sort((a, b) => b.winRate - a.winRate || (b.runsScored - b.runsAllowed) - (a.runsScored - a.runsAllowed));
       return teams.map((t, idx) => ({ ...t, rank: idx + 1 }));
@@ -52,8 +67,8 @@ export async function fetchMLBStandings() {
         sourceUrl,
         scrapedAt,
         status: 'success',
-        parser: 'MLB Official REST API (statsapi.mlb.com)',
-        selectorInfo: 'JSON Path: records[].teamRecords[] -> team.name, winningPercentage, runsScored, runsAllowed, wins, losses',
+        parser: 'ESPN Official Standings Feed (espn.com)',
+        selectorInfo: 'ESPN API (site.api.espn.com/apis/v2/sports/baseball/mlb/standings) -> Team Name (1열), WinRate (3열/winPercent), Wins, Losses, RunsScored, RunsAllowed',
       },
       subLeagues: [
         { name: 'American League', teams: finalAL },
@@ -70,7 +85,7 @@ export async function fetchMLBStandings() {
         scrapedAt,
         status: 'fallback_cache',
         parser: 'MLB Baseline Cache',
-        selectorInfo: 'Pre-loaded verified season standings (Stats API fallback)',
+        selectorInfo: 'Pre-loaded verified season standings (ESPN fallback)',
         errorMessage: error.message,
       },
       subLeagues: [
@@ -119,3 +134,4 @@ export function getFallbackMLBData() {
     ],
   };
 }
+
