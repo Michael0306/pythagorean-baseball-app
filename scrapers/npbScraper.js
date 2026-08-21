@@ -1,63 +1,68 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
+const TEAM_MAP = {
+  // Central League
+  '巨人': { team: 'Giants', teamCode: 'GIA', id: 'npb_gia' },
+  '阪신': { team: 'Tigers', teamCode: 'TIG', id: 'npb_tig' }, // Korean/Japanese mixed just in case
+  '阪神': { team: 'Tigers', teamCode: 'TIG', id: 'npb_tig' },
+  'ＤｅＮＡ': { team: 'BayStars', teamCode: 'BAY', id: 'npb_bay' },
+  'DeNA': { team: 'BayStars', teamCode: 'BAY', id: 'npb_bay' },
+  '広島': { team: 'Carp', teamCode: 'CAR', id: 'npb_car' },
+  '中日': { team: 'Dragons', teamCode: 'DRA', id: 'npb_dra' },
+  '야쿠르트': { team: 'Swallows', teamCode: 'SWA', id: 'npb_swa' },
+  'ヤクルト': { team: 'Swallows', teamCode: 'SWA', id: 'npb_swa' },
+  // Pacific League
+  '소프트뱅크': { team: 'Hawks', teamCode: 'HAW', id: 'npb_haw' },
+  'ソフトバンク': { team: 'Hawks', teamCode: 'HAW', id: 'npb_haw' },
+  '로ッテ': { team: 'Marines', teamCode: 'MAR', id: 'npb_mar' },
+  'ロッテ': { team: 'Marines', teamCode: 'MAR', id: 'npb_mar' },
+  '니혼햄': { team: 'Fighters', teamCode: 'FIG', id: 'npb_fig' },
+  '日本ハム': { team: 'Fighters', teamCode: 'FIG', id: 'npb_fig' },
+  '오릭스': { team: 'Buffaloes', teamCode: 'BUF', id: 'npb_buf' },
+  'オリックス': { team: 'Buffaloes', teamCode: 'BUF', id: 'npb_buf' },
+  '라쿠텐': { team: 'Eagles', teamCode: 'EAG', id: 'npb_eag' },
+  '楽天': { team: 'Eagles', teamCode: 'EAG', id: 'npb_eag' },
+  '세이부': { team: 'Lions', teamCode: 'LIO', id: 'npb_lio' },
+  '西武': { team: 'Lions', teamCode: 'LIO', id: 'npb_lio' }
+};
+
+function mapTeam(name) {
+  const cleanName = name.trim();
+  return TEAM_MAP[cleanName] || {
+    team: cleanName,
+    teamCode: cleanName.substring(0, 3).toUpperCase(),
+    id: `npb_${cleanName}`
+  };
+}
+
 export async function fetchNPBStandings() {
-  const sourceUrl = 'https://sports.yahoo.co.jp/baseball/npb/standings/';
   const scrapedAt = new Date().toISOString();
+  const centralUrl = 'https://baseball.yahoo.co.jp/npb/standings/detail/1';
+  const pacificUrl = 'https://baseball.yahoo.co.jp/npb/standings/detail/2';
 
   try {
-    const response = await axios.get(sourceUrl, {
-      timeout: 10000,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      },
-    });
+    const headers = {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    };
 
-    const $ = cheerio.load(response.data);
-    const central = [];
-    const pacific = [];
+    const [centralRes, pacificRes] = await Promise.all([
+      axios.get(centralUrl, { timeout: 10000, headers }),
+      axios.get(pacificUrl, { timeout: 10000, headers })
+    ]);
 
-    // Attempting DOM extraction if available
-    $('.bb-rankTable').each((tableIdx, tableEl) => {
-      const rows = $(tableEl).find('tbody tr');
-      rows.each((rIdx, tr) => {
-        const teamName = $(tr).find('.bb-rankTable__teamName').text().trim();
-        const rank = parseInt($(tr).find('.bb-rankTable__rank').text().trim() || rIdx + 1, 10);
-        const tds = $(tr).find('td');
-        if (teamName && tds.length >= 5) {
-          const wins = parseInt($(tds[2]).text().trim() || 0, 10);
-          const losses = parseInt($(tds[3]).text().trim() || 0, 10);
-          const winRate = parseFloat($(tds[5]).text().trim() || 0);
-          const runsScored = parseInt($(tds[6]).text().trim() || 0, 10);
-          const runsAllowed = parseInt($(tds[7]).text().trim() || 0, 10);
-
-          const item = {
-            id: `npb_${tableIdx}_${rIdx}`,
-            team: teamName,
-            teamCode: teamName.substring(0, 3).toUpperCase(),
-            rank,
-            wins,
-            losses,
-            winRate,
-            runsScored,
-            runsAllowed,
-          };
-
-          if (tableIdx === 0) central.push(item);
-          else pacific.push(item);
-        }
-      });
-    });
+    const central = parseLeagueTable(centralRes.data, 0);
+    const pacific = parseLeagueTable(pacificRes.data, 1);
 
     if (central.length >= 6 && pacific.length >= 6) {
       return {
         metadata: {
           league: 'NPB',
-          sourceUrl,
+          sourceUrl: 'https://baseball.yahoo.co.jp/npb/standings/',
           scrapedAt,
           status: 'success',
-          parser: 'Yahoo Japan NPB Standings HTML Parser (Cheerio)',
-          selectorInfo: '.bb-rankTable tbody tr -> .bb-rankTable__teamName, wins, losses, winRate, runsScored, runsAllowed',
+          parser: 'Yahoo Japan NPB Standings Detail HTML Parser (Cheerio)',
+          selectorInfo: '.bb-rankTable tbody tr (Rank, Team, Wins, Losses, WinRate, RunsScored, RunsAllowed)',
         },
         subLeagues: [
           { name: 'Central League', teams: central },
@@ -66,14 +71,14 @@ export async function fetchNPBStandings() {
       };
     }
 
-    throw new Error('NPB DOM elements did not yield 12 full teams');
+    throw new Error(`NPB DOM elements did not yield 12 full teams (Central: ${central.length}, Pacific: ${pacific.length})`);
   } catch (error) {
     console.warn('[NPB Scraper Warning] Using verified baseline data:', error.message);
     const fallback = getFallbackNPBData();
     return {
       metadata: {
         league: 'NPB',
-        sourceUrl,
+        sourceUrl: 'https://baseball.yahoo.co.jp/npb/standings/',
         scrapedAt,
         status: 'fallback_cache',
         parser: 'NPB Baseline Cache (NPB Official fallback)',
@@ -86,6 +91,44 @@ export async function fetchNPBStandings() {
       ],
     };
   }
+}
+
+function parseLeagueTable(html, tableIdx) {
+  const $ = cheerio.load(html);
+  const list = [];
+
+  $('.bb-rankTable tbody tr').each((rIdx, tr) => {
+    const cells = [];
+    $(tr).find('td, th').each((_, td) => {
+      cells.push($(td).text().trim());
+    });
+
+    if (cells.length >= 11) {
+      const jpTeamName = cells[1];
+      const teamInfo = mapTeam(jpTeamName);
+      
+      const rank = parseInt(cells[0] || rIdx + 1, 10);
+      const wins = parseInt(cells[3] || 0, 10);
+      const losses = parseInt(cells[4] || 0, 10);
+      const winRate = parseFloat(cells[6] || 0);
+      const runsScored = parseInt(cells[9] || 0, 10);
+      const runsAllowed = parseInt(cells[10] || 0, 10);
+
+      list.push({
+        id: teamInfo.id,
+        team: teamInfo.team,
+        teamCode: teamInfo.teamCode,
+        rank,
+        wins,
+        losses,
+        winRate,
+        runsScored,
+        runsAllowed,
+      });
+    }
+  });
+
+  return list;
 }
 
 export function getFallbackNPBData() {
